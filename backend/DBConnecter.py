@@ -1,6 +1,11 @@
 import logging
 import time
 import mysql.connector
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 
 # Set up logger
 logger = logging.getLogger(__name__)
@@ -38,3 +43,16 @@ def connect_to_mysql(config, attempts=3, delay=2):
             time.sleep(delay ** attempt)
             attempt += 1
     return None
+
+user = os.getenv('DB_USER')
+host = os.getenv('DB_HOST')
+password = os.getenv('DB_PASSWORD')
+config = {
+    'user':user,
+    'password':password,
+    'host':host,
+    'database':db_name,
+    'raise_on_warnings':True,
+}
+
+cnx = connect_to_mysql(config)
