@@ -47,6 +47,8 @@ def connect_to_mysql(config, attempts=3, delay=2):
 user = os.getenv('DB_USER')
 host = os.getenv('DB_HOST')
 password = os.getenv('DB_PASSWORD')
+db_name = os.getenv('DB_NAME')
+
 config = {
     'user':user,
     'password':password,
