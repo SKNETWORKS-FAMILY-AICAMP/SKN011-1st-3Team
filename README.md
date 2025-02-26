@@ -62,6 +62,8 @@
    - 전기차 구매 시 소비자들이 주로 궁금해하는 다양한 정보를 종합하여 FAQ 형태로 정리함.
 
 ### 3) 💻 프로젝트 내용
+  
+  ## ERD
   <p align="center">
   <img src="ERD.png" height="300" width="400">
   </p>
