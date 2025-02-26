@@ -21,7 +21,7 @@
 2.  프로젝트 내용
   1) 사용 기술 (필요 시)
   2) WBS
-  3) 데이터베이스 (ERD)
+  3) ERD
   4) 프로젝트 수행 결과 (streamlit 화면)
 
 ---
@@ -61,7 +61,7 @@
 
 ## 2. 💻 프로젝트 내용
   
-### 1) 💡 프로젝트 필요성
+### 3) 💡 ERD
   <p align="center">
   <img src="./readme_img/ERD.png" height="600" width="800">
   </p>
