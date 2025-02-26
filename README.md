@@ -61,6 +61,8 @@
 
  * 이에따라, 소비자들이 전기차 구매 시 가장 궁금해하는 정보를 직접적으로 비교할 수 있도록 대표적인 국내 전기차 모델들의 성능, 정부 보조금, 그리고 국내 충전 인프라 현황에 대한 종합적인 정보를 제공하고자 함.
 
+<br>
+
 ### 2) 🎯 프로젝트 목표
 
  💿 국내 전기차 모델 성능, 국내 충전 인프라 현황 데이터베이스 구축
@@ -75,7 +77,6 @@
  ❓ 전기차 구매 보조를 위한 통합 정보 FAQ
    - 전기차 구매 시 소비자들이 주로 궁금해하는 다양한 정보를 종합하여 FAQ 형태로 정리함.
 
-
 <br>
 
 ---
@@ -85,11 +86,13 @@
 ### 1) 🛠️ 사용 기술
  |<img src="https://img.shields.io/badge/streamlit-E31337?style=for-the-badge&logo=streamlit&logoColor=red"> |<img src="https://img.shields.io/badge/mysql-003791?style=for-the-badge&logo=mysql&logoColor=blue"> |<img src="https://img.shields.io/badge/python-49CC68?style=for-the-badge&logo=notion&logoColor=green"> |<img src="https://img.shields.io/badge/fast api-FF7900?style=for-the-badge&logo=fast api&logoColor=orange"> |<img src="https://img.shields.io/badge/selenium-7A1FA2?style=for-the-badge&logo=notion&logoColor=purple">|<img src="https://img.shields.io/badge/데이터 정제-000000?style=for-the-badge&logo=데이터 정제&logoColor=white">|
 
+<br>
+
 ### 2) 🕸️ ERD
   <p align="center">
   <img src="./readme_img/ERD.png" height="600" width="800">
   </p>
-  
+
 ### 3) 🎫 WBS
 
 <center>
@@ -104,6 +107,8 @@
 | 디버깅             | 02-26  | 02-26  | ALL      | 결과                 |
 
 </center>
+
+<br>
 
 ### 4) 🖼️ 데이터 시각화 플랫폼
 
