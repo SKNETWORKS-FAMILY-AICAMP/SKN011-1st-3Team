@@ -64,7 +64,7 @@
 ## 2. 💻 프로젝트 내용
 
 ### 1) 🛠️ 사용 기술
-  |<img src="https://img.shields.io/badge/streamlit-000000?style=for-the-badge&logo=streamlit&logoColor=white"> |<img src="https://img.shields.io/badge/mysql-000000?style=for-the-badge&logo=mysql&logoColor=white"> |<img src="https://img.shields.io/badge/python-000000?style=for-the-badge&logo=notion&logoColor=white"> |<img src="https://img.shields.io/badge/fast api-000000?style=for-the-badge&logo=fast api&logoColor=white"> |<img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">|<img src="https://img.shields.io/badge/데이터 정제-000000?style=for-the-badge&logo=데이터 정제&logoColor=white">|
+ |<img src="https://img.shields.io/badge/streamlit-E31337?style=for-the-badge&logo=streamlit&logoColor=red"> |<img src="https://img.shields.io/badge/mysql-003791?style=for-the-badge&logo=mysql&logoColor=blue"> |<img src="https://img.shields.io/badge/python-49CC68?style=for-the-badge&logo=notion&logoColor=green"> |<img src="https://img.shields.io/badge/fast api-FF7900?style=for-the-badge&logo=fast api&logoColor=orange"> |<img src="https://img.shields.io/badge/selenium-7A1FA2?style=for-the-badge&logo=notion&logoColor=purple">|<img src="https://img.shields.io/badge/데이터 정제-000000?style=for-the-badge&logo=데이터 정제&logoColor=white">|
 
 ### 2) 🕸️ ERD
   <p align="center">
@@ -116,15 +116,15 @@
 
 ## 3. 📜 한 줄 회고
 
-이현대: 코딩이 너무 재밌어요!
+* 이현대: 코딩이 너무 재밌어요!
 
-안종현: 코딩이 너무 환상적이에요!
+* 안종현: 코딩이 너무 환상적이에요!
 
-방성일: 코딩할 때 방긋방긋 웃었어요!
+* 방성일: 코딩할 때 방긋방긋 웃었어요!
 
-홍성욱: 함께 하며 많이 배웠습니다!
+* 홍성욱: 함께 하며 많이 배웠습니다!
 
-신진슬: 코딩하면서 행복했어요!
+* 신진슬: 코딩하면서 행복했어요!
 
 
 
