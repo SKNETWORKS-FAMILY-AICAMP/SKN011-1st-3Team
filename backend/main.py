@@ -2,7 +2,7 @@ from fastapi import FastAPI,Query
 import re
 import subprocess
 import json
-from data_search import equal_serach,search_all,custom_equal_serach
+from data_search import equal_serach,search_all,custom_equal_serach,like_serach
 app = FastAPI()
 
 
@@ -33,6 +33,30 @@ async def get_car_info(car_name: str = Query(None)):
 @app.get("/api/chargeStatistics")
 async def get_charge_Statistics():
     res_data = search_all('CHARGE_STATISTICS')
+    return {"code":200,"resData":res_data}
+
+@app.get('/api/region-info')
+async def get_region_info():
+    res_data = search_all('REGION')
+    result = {}
+    for row in res_data[1:]:
+        # key는 1번 인덱스(지역명), value는 0번 인덱스(지역 코드)
+        key = row[1]
+        value = row[0]
+        result[key] = value
+
+    return {"code":200,"resData":result}
+
+@app.get('/api/charge-search')
+async def get_region_info(address: str = Query(None)):
+    res_data = like_serach('CHARGE','CHARGE_ADDRESS',address)
+    result = {}
+    # for row in res_data[1:]:
+    #     # key는 1번 인덱스(지역명), value는 0번 인덱스(지역 코드)
+    #     key = row[1]
+    #     value = row[0]
+    #     result[key] = value
+
     return {"code":200,"resData":res_data}
 
 @app.get('/api/region-info')
