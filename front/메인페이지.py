@@ -1,9 +1,12 @@
+
 import streamlit as st
-from streamlit_option_menu import option_menu
 import streamlit.components.v1 as html
 import base64
 from PIL import Image, ImageSequence
 import os
+
+# 현재 스크립트 파일의 절대 경로를 구합니다.
+current_dir = os.path.dirname(os.path.abspath(__file__))
 
 
 # st.title('The Ultimate EV Choice! ⚡')
@@ -28,7 +31,7 @@ import os
 
 
 # GIF 파일 경로 설정 (Menu.py 기준 상대 경로)
-gif_path = "pages/gif/ev.gif"  # 슬래시(/)를 사용한 상대 경로
+gif_path = "./pages/gif/ev.gif"  # 슬래시(/)를 사용한 상대 경로
 
 # GIF 파일 존재 여부 확인
 try:
@@ -42,7 +45,7 @@ try:
     st.header('현대·기아·테슬라 전기차 비교, 최고의 선택을 위한 인사이트!')  # 헤더 표시
 
     # HTML <img> 태그를 사용해 Base64 인코딩된 GIF 표시
-    st.image("pages\gif\ev.gif", use_container_width=True)
+    st.image("./pages/gif/ev.gif", use_container_width=True)
     # st.markdown(
     #     f'<img src="data:image/gif;base64,{gif_base64}" alt="EV Comparison" style="width:1000; height:770;">',
     #     unsafe_allow_html=True,
