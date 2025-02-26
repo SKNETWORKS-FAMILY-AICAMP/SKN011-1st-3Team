@@ -6,6 +6,7 @@ import requests
 import pandas as pd
 import plotly.express as px
 import streamlit as st
+import json
 
 # CSV 데이터 로드 (지정된 경로에서 로드)
 def load_data():
@@ -84,29 +85,39 @@ with right_column:
     st.bar_chart(pt_data, x='도', y=['고속 충전기 수', '완속 충전기 수'])
 
 # 시만 선택할 수 있도록 토글 기능 단순화
-# st.header("📍 지역별 상세 충전소 정보 보기 (시 단위)")
+st.header("📍 지역별 상세 충전소 정보 보기 (시 단위)")
 
-# regionData = requests.get(url + '/region-info').json()["resData"]
-# print(regionData)
+regionData = requests.get(url + '/region-info').json()["resData"]
 
-# region_dict = data["주소"].apply(lambda x: x.split()[0]).unique().tolist()
 
-# selected_region = st.selectbox('지역을 선택하세요', list(region_dict.keys()))
+selected_region = st.selectbox('지역을 선택하세요', list(regionData.keys()))
 
-# if selected_region:
-#     # API URL 설정 (url 변수는 미리 정의했다고 가정)
-#     api_url = url + '/charge-search'
+if selected_region:
+    api_url = url + '/charge-search'
+    response = requests.get(api_url, params={"address": regionData[selected_region]}).json()["resData"]
     
-#     response = requests.get(api_url, params={"car_name": selected_region})
-#     print(response)
-#     # 응답 JSON에서 "resData" 키의 데이터를 가져옴
-#     charge_data = response.json()["resData"]
+    # 응답 JSON에서 "resData" 키의 데이터를 가져옴
+    columns = ['시/군', '충전기 정보', '원산지', '충전 속도', '충전소 명', '충전소 주소']
+
+
+    processed_data = []
+    for row in response:
+        new_row = row[1:]
+        # new_row[1]는 충전기 정보(원래는 row[2])에 해당
+        charge_type_str = new_row[1]
+        try:
+            charge_data = json.loads(charge_type_str)
+            result_lines = []
+            for key, count in charge_data.items():
+                display_key = "슈퍼차저" if key == "NACS" else key
+                result_lines.append(f"{display_key}: {count}개")
+            charge_text = "/".join(result_lines)
+        except Exception as e:
+            charge_text = charge_type_str
+        # new_row[1]에 변환된 문자열로 대체
+        new_row[1] = charge_text
+        processed_data.append(new_row)
+
+    df = pd.DataFrame(processed_data[1:], columns=columns)
+    st.dataframe(df)
     
-#     # API 응답 데이터를 DataFrame으로 변환
-#     charge_df = pd.DataFrame(charge_data)
-    
-#     # "주소" 컬럼에 선택된 지역명이 포함된 행만 필터링하여 "충전소", "주소" 컬럼만 선택
-#     filtered_data = charge_df[charge_df["주소"].str.contains(selected_region)][["충전소", "주소"]]
-    
-#     st.subheader(f"🔎 {selected_region}의 충전소 목록")
-#     st.dataframe(filtered_data.reset_index(drop=True), use_container_width=True)

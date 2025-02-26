@@ -29,7 +29,7 @@ def like_serach(table_name,column_name,search_text):
 def equal_serach(table_name,column_name,search_text):
     if cnx and cnx.is_connected():
         with cnx.cursor() as cursor:
-            query = f'SELECT * FROM {table_name} WHERE {column_name} = %s'
+            query = f'SELECT * FROM {table_name} WHERE {column_name} = %s LIMIT 100'
             cursor.execute(query, (f"{search_text}",))  
             rows = cursor.fetchall()
             column_names = [desc[0] for desc in cursor.description]

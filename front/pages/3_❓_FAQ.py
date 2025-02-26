@@ -25,5 +25,5 @@ for question, answer in faq_list:
 
 # 하단 라인
 st.write("---")
-st.markdown("<h5 style='text-align: center;'>📞 추가 문의는 고객센터로 연락주세요.\n [경기도 광주지점]010-5013-0715</h5>", unsafe_allow_html=True)
+st.markdown("<h5 style='text-align: center;'>📞 추가 문의는 고객센터로 연락주세요.\n [경기도 광주지점]010-1234-5678</h5>", unsafe_allow_html=True)
 

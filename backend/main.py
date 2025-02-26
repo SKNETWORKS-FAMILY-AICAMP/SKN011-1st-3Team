@@ -49,8 +49,7 @@ async def get_region_info():
 
 @app.get('/api/charge-search')
 async def get_region_info(address: str = Query(None)):
-    res_data = like_serach('CHARGE','CHARGE_ADDRESS',address)
-    result = {}
+    res_data = equal_serach('CHARGE','REGOIN_CODE',address)
     # for row in res_data[1:]:
     #     # key는 1번 인덱스(지역명), value는 0번 인덱스(지역 코드)
     #     key = row[1]
