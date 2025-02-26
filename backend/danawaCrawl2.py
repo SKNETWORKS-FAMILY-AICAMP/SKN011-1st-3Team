@@ -7,7 +7,7 @@ import time
 import re
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from bs4 import BeautifulSoup
+from data_insert_module import db_insert_module
 
 
 
@@ -46,7 +46,7 @@ place =1
 for brand in brand_list:
     # brand 값을 설정합니다.
     if brand =='현대' or brand=='기아' or brand=='테슬라':
-        define_script = f"window.brand = {brand_list[brand]["brand_code"]};"
+        define_script = f'window.brand = {brand_list[brand]["brand_code"]};'
         driver.execute_script(define_script)
         
         
@@ -72,14 +72,15 @@ for brand in brand_list:
         driver.execute_script("openAutoTab('brand');")
 driver.execute_script("javascript:$('#autodanawa_popup .close').click();")
 data_index = 1
-def extract_data(tr_id, td_id, attOption=None, default_msg=None, clsOption=None):
+def extract_data(tr_id, td_id, attOption=None, default_msg=None, clsOption=None,imgOption=False):
     unit_element = driver.find_element(By.ID, tr_id)
     td_element = unit_element.find_element(By.ID, td_id)
     
     # attOption이 지정된 경우 해당 속성 값 반환
     if attOption:
         return td_element.get_attribute(attOption)
-    
+    if imgOption:
+        return td_element.find_element(By.TAG_NAME,'img').get_attribute('src')
     # price_class가 지정되어 있다면 해당 클래스의 자식 요소를 찾음
     if clsOption:
         try:
@@ -119,11 +120,11 @@ new_list = []
 for brand in brand_list:
     if brand =='현대' or brand=='기아' or brand=='테슬라':
         for item in brand_list[brand]["items"]:
-            script = f"getCompData({data_index},'{item["car_sub_code"]}')"
+            script = f'getCompData({data_index},"{item["car_sub_code"]}")'
             driver.execute_script(script)
             model_fuels = extract_data('unitSumy5',f'Sumy5_{data_index}', default_msg="연료 정보 없음")
             
-            if '배터리' in model_fuels or '전기' in model_fuels:
+            if ('배터리' in model_fuels or '전기' in model_fuels) and ('가솔린' not in model_fuels or '경유' not in model_fuels) :
                 price = extract_data('unitSumy1',f'Sumy1_{data_index}',clsOption='.vals')
                 car_code = extract_data('unitPhoto',f'Photo_{data_index}','code')
                 subsidies = extract_data('unitIncnt',f'Incnt_{data_index}')
@@ -131,6 +132,7 @@ for brand in brand_list:
                 efficiencies = extract_data('unitSumy6',f'Sumy6_{data_index}')
                 distances = extract_data('unitSumy7',f'Sumy7_{data_index}')
                 types = extract_data('unitSumy3',f'Sumy3_{data_index}')
+                car_img_url = extract_data('unitPhoto',f'Photo_{data_index}',imgOption=True)
                 new_list.append(
                     {
                         "brand":brand,
@@ -141,21 +143,22 @@ for brand in brand_list:
                         "efficiencies": float(extract_numeric(efficiencies)) if extract_numeric(efficiencies) else 0.0,
                         "distances":int(extract_numeric(distances)) if extract_numeric(distances) else 0,
                         "types":types,
-                        "fuels":fuels
+                        "fuels":fuels,
+                        "img_url":car_img_url
                     })
             if data_index==5:
                 data_index=1
                 continue
             data_index+=1
 
-from data_insert_module import db_insert_module
+
 replace_list = []
 for item in new_list:
-    insertData = (item["car_code"],item["model_name"],item["price"],item["types"],item["efficiencies"],item["fuels"],item["distances"],item["subsidy"],item["brand"])
+    insertData = (item["car_code"],item["model_name"],item["price"],item["types"],item["efficiencies"],item["fuels"],item["distances"],item["subsidy"],item["brand"],item["img_url"])
     replace_list.append(insertData)
 
-db_insert_module("CAR",replace_list)
-print('CAR COMPLETE')
+# db_insert_module("CAR",replace_list)
+# print('CAR COMPLETE')
     
 
 
