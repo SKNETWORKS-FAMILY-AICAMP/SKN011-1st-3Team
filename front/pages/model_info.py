@@ -1,14 +1,15 @@
 import streamlit as st
 import plotly.graph_objects as go
 import os
+import requests
 
+url ='http://127.0.0.1:8000/api'
 # 자동차 데이터 예시
-data = {
-    "현대": ["아반떼", "쏘나타", "팰리세이드"],
-    "기아": ["K5", "K7", "스포티지"],
-    "테슬라": ["모델3", "모델Y", "모델S"]
-}
+data = requests.get(url+'/brand-info').json()["resData"]
 
+
+
+car_data = requests.get(url+'/car-info').json()["resData"]
 # 성능 및 지원금 정보 예시
 performance_data = {
     "아반떼": {"연비": "15km/L", "마력": "123hp", "지원금": {"서울": 100, "경기": 80}},
@@ -23,7 +24,8 @@ performance_data = {
 }
 
 # 지역 목록
-regions = ["서울", "경기", "강원", "충청", "전라", "경상"]
+regions = requests.get(url+'/region-info').json()["resData"]
+
 
 st.set_page_config(page_title="전기차 모델 비교", page_icon="🚗", layout="wide")
 st.title("🔍 전기차 모델 성능 및 지원금 비교")
@@ -46,23 +48,8 @@ if theme_toggle:
 
 # 모델별 대표 이미지 표시 (로컬 이미지 경로 사용)
 def show_car_image(model):
-    base_path = os.path.dirname(__file__)  
-    image_paths = {
-        "아반떼": os.path.join(base_path, "images/avante.gif"),
-        "쏘나타": os.path.join(base_path, "images/sonata.gif"),
-        "팰리세이드": os.path.join(base_path, "images/palisade.jpg"),
-        "K5": os.path.join(base_path, "images/k5.jpg"),
-        "K7": os.path.join(base_path, "images/k7.jpg"),
-        "스포티지": os.path.join(base_path, "images/sportage.jpg"),
-        "모델3": os.path.join(base_path, "images/model3.jpg"),
-        "모델Y": os.path.join(base_path, "images/modely.jpg"),
-        "모델S": os.path.join(base_path, "images/models.jpg"),
-    }
-    image_path = image_paths.get(model, None)
-    if image_path and os.path.exists(image_path):
-        st.image(image_path, caption=f"{model} 대표 이미지", use_container_width=True)
-    else:
-        st.warning(f"❗ {model}에 대한 로컬 이미지를 찾을 수 없습니다.")
+    st.image(model, caption=f"{model} 대표 이미지", use_container_width=True)
+    
 
 # 자동차 비교 여부 선택
 compare = st.toggle("✨ 두 모델 비교", value=False)
@@ -74,8 +61,9 @@ with col1:
     st.subheader("🚗 첫 번째 자동차 선택")
     selected_company1 = st.selectbox("**회사**", list(data.keys()), key="company1")
     selected_model1 = st.selectbox("**모델**", data[selected_company1], key="model1")
-    selected_region1 = st.selectbox("**거주 지역**", regions, key="region1")
-    show_car_image(selected_model1)
+    selected_region1 = st.selectbox("**거주 지역**", list(regions.keys()), key="region1")
+    selected_region_code = regions[selected_region1]
+    
 
 if compare:
     with col2:
@@ -83,16 +71,26 @@ if compare:
         selected_company2 = st.selectbox("**비교 전기차 회사**", list(data.keys()), key="company2")
         selected_model2 = st.selectbox("**비교 전기차 모델**", data[selected_company2], key="model2")
         selected_region2 = st.selectbox("**거주 지역**", regions, key="region2")
-        show_car_image(selected_model2)
+        
 
 # 성능 세부 정보 확장 기능
 def display_car_info(model, region):
-    model_info = performance_data.get(model, {})
-    support = model_info.get("지원금", {}).get(region, "지원금 정보 없음")
+    
+    model_info =  requests.get(url+'/car-info', params={"car_name": model}).json()["resData"]
+    header = model_info[0]
+    values = model_info[1]
+    # 딕셔너리로 변환합니다.
+    result = { header[i]: values[i] for i in range(len(header)) }
+    show_car_image(result["IMG_URL"])
+    # requests.post(url, params={"car_code": result["CAR_CODE"],"sido":'D31'}).json()["resData"]
+    
+    support = result["SUBSIDY"]
     with st.expander(f"🔎 {model} 상세 정보 보기"):
-        st.success(f"💡 **연비:** {model_info.get('연비', '정보 없음')}")
-        st.info(f"⚡ **마력:** {model_info.get('마력', '정보 없음')}")
+        st.success(f"💡 **연비:** {result['FUEL_EFFICIENCY']}")
+        st.info(f"⚡ **마력:** {result['MAX_DISTANCE']}")
         st.warning(f"💸 **{region} 지역 지원금:** {support}만원")
+
+    support = ''
     return model_info, support
 
 if selected_model1 and selected_region1:

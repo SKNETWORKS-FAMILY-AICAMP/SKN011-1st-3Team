@@ -2,7 +2,7 @@ from fastapi import FastAPI,Query
 import re
 import subprocess
 import json
-from data_search import equal_serach,search_all
+from data_search import equal_serach,search_all,custom_equal_serach
 app = FastAPI()
 
 
@@ -38,4 +38,32 @@ async def get_charge_Statistics():
 @app.get('/api/region-info')
 async def get_region_info():
     res_data = search_all('REGION')
-    return {"code":200,"resData":res_data}
+    result = {}
+    for row in res_data[1:]:
+        # key는 1번 인덱스(지역명), value는 0번 인덱스(지역 코드)
+        key = row[1]
+        value = row[0]
+        result[key] = value
+
+    return {"code":200,"resData":result}
+
+@app.get('/api/brand-info')
+async def get_brand_info_all():
+    hyeon_data = custom_equal_serach('CAR','MODEL_NAME,BRAND_NAME','BRAND_NAME','현대')
+    hyeonkiakia_data = custom_equal_serach('CAR','MODEL_NAME,BRAND_NAME','BRAND_NAME','기아')
+    tesla_data = custom_equal_serach('CAR','MODEL_NAME,BRAND_NAME','BRAND_NAME','테슬라')
+    all_data = hyeon_data + hyeonkiakia_data + tesla_data
+    data = {}
+    for row in all_data:
+    
+        if row[0] == ['MODEL_NAME', 'BRAND_NAME'] :
+            continue
+
+        model, brand = row
+        if model == 'MODEL_NAME':
+            continue
+        if brand not in data:
+            data[brand] = []
+        # 모델명을 리스트에 추가합니다.
+        data[brand].append(model)
+    return {"code":200,"resData":data}
