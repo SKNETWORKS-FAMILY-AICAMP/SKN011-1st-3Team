@@ -64,8 +64,29 @@
 
 ### 1) 🛠️ 사용 기술
   |<img src="https://img.shields.io/badge/streamlit-000000?style=for-the-badge&logo=streamlit&logoColor=white"> |<img src="https://img.shields.io/badge/mysql-000000?style=for-the-badge&logo=mysql&logoColor=white"> |<img src="https://img.shields.io/badge/python-000000?style=for-the-badge&logo=notion&logoColor=white"> |<img src="https://img.shields.io/badge/fast api-000000?style=for-the-badge&logo=fast api&logoColor=white"> |<img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">|<img src="https://img.shields.io/badge/데이터 정제-000000?style=for-the-badge&logo=데이터 정제&logoColor=white">|
+
 ### 2) 🕸️ ERD
   <p align="center">
   <img src="./readme_img/ERD.png" height="600" width="800">
   </p>
 
+### 3) 🖼️ 프로젝트 수행 결과
+ * 메인화면
+  <p align="center">
+  <img src="./readme_img/front_1.png" height="420" width="800">
+  </p>
+  
+ * 자동차 모델 비교
+  <p align="center">
+  <img src="./readme_img/front_2.png" height="420" width="800">
+  </p>
+
+ * 충전소 정보
+  <p align="center">
+  <img src="./readme_img/front_3.png" height="420" width="800">
+  </p>
+
+ * 종합 정보 FAQ
+  <p align="center">
+  <img src="./readme_img/front_4.png" height="420" width="800">
+  </p>
