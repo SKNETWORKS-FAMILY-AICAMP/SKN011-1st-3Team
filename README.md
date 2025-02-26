@@ -65,5 +65,5 @@
   
   ## ERD
   <p align="center">
-  <img src="./readme_img/ERD.png" height="300" width="400">
+  <img src="./readme_img/ERD.png" height="600" width="800">
   </p>
