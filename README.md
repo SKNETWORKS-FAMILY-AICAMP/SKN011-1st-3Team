@@ -115,25 +115,25 @@
  * 메인화면
 
   <p align="center">
-  <img src="./readme_img/front_1.png" height="390" width="800">
+  <img src="./readme_img/front_1.png" height="400" width="800">
   </p>
 
  * 전기차 모델 성능 비교
 
   <p align="center">
-  <img src="./readme_img/front_2.png" height="390" width="800">
+  <img src="./readme_img/front_2.png" height="400" width="800">
   </p>
 
  * 국내 충전인프라 현황
 
   <p align="center">
-  <img src="./readme_img/front_3.png" height="390" width="800">
+  <img src="./readme_img/front_3.png" height="400" width="800">
   </p>
 
  * 통합 정보 FAQ
 
   <p align="center">
-  <img src="./readme_img/front_4.png" height="390" width="800">
+  <img src="./readme_img/front_4.png" height="400" width="800">
   </p>
 
 
