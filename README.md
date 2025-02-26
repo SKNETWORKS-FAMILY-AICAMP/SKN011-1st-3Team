@@ -67,29 +67,9 @@
   <p align="center">
   <img src="./readme_img/ERD.png" height="600" width="800">
   </p>
-
-### 3) 🖼️ 프로젝트 수행 결과
- * 메인화면
-  <p align="center">
-  <img src="./readme_img/front_1.png" height="420" width="800">
-  </p>
   
- * 자동차 모델 비교
-  <p align="center">
-  <img src="./readme_img/front_2.png" height="420" width="800">
-  </p>
+### 3) 🕸️ WBS
 
- * 충전소 정보
-  <p align="center">
-  <img src="./readme_img/front_3.png" height="420" width="800">
-  </p>
-
- * 종합 정보 FAQ
-  <p align="center">
-  <img src="./readme_img/front_4.png" height="420" width="800">
-  </p>
-
-### WBS
  | 작업명              | 시작일 | 종료일 | 담당자   | 산출물               |
 |---------------------|--------|--------|----------|----------------------|
 | 프로젝트 주제선정   | 02-25  | 02-25  | ALL      | 없음                 |
@@ -98,6 +78,7 @@
 | web crawling       | 02-25  | 02-26  | ALL      | 데이터수집           |
 | Streamlit UI 구현   | 02-25  | 02-26  | ALL      | Streamlit            |
 | 디버깅             | 02-26  | 02-26  | ALL      | 결과                 |
+
 
 ### 한줄 회고
 
