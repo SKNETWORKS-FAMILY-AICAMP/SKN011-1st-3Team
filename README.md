@@ -66,3 +66,7 @@
   <p align="center">
   <img src="./readme_img/ERD.png" height="600" width="800">
   </p>
+
+
+ ## 주요 기술
+  |<img src="https://img.shields.io/badge/streamlit-000000?style=for-the-badge&logo=streamlit&logoColor=white"> |<img src="https://img.shields.io/badge/mysql-000000?style=for-the-badge&logo=mysql&logoColor=white"> |<img src="https://img.shields.io/badge/python-000000?style=for-the-badge&logo=notion&logoColor=white"> |<img src="https://img.shields.io/badge/fast api-000000?style=for-the-badge&logo=fast api&logoColor=white"> |<img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">|<img src="https://img.shields.io/badge/데이터 정제-000000?style=for-the-badge&logo=데이터 정제&logoColor=white">|
