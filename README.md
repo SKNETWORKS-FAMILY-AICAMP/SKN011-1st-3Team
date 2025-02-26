@@ -119,13 +119,31 @@
  * 전기차 모델 성능 비교
 
   <p align="center">
-  <img src="./readme_img/front_2.png" height="400" width="800">
+  <img src="./readme_img/front_2-1.png" height="400" width="800">
+  </p>
+
+<br>
+
+  <p align="center">
+  <img src="./readme_img/front_2-2.png" height="400" width="800">
   </p>
 
  * 국내 충전인프라 현황
 
   <p align="center">
-  <img src="./readme_img/front_3.png" height="400" width="800">
+  <img src="./readme_img/front_3-1.png" height="400" width="800">
+  </p>
+
+<br>
+
+  <p align="center">
+  <img src="./readme_img/front_3-2.png" height="400" width="800">
+  </p>
+
+<br>
+
+  <p align="center">
+  <img src="./readme_img/front_3-3.png" height="400" width="800">
   </p>
 
  * 통합 정보 FAQ
