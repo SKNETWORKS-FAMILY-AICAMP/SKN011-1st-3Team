@@ -1,5 +1,12 @@
 import streamlit as st
-
+import asyncio
+import os
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from dotenv import load_dotenv
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
 # 페이지 제목
 st.markdown("<h1 style='text-align: center;'>EV를 필요로 하는 당신, \n 무엇이든 물어보세요!</h1>", unsafe_allow_html=True)
 st.write("---")
@@ -18,6 +25,8 @@ faq_list = [
     ("Q10. EV는 얼마나 안전한가요?", "🛡️ EV는 낮은 무게 중심과 최신 안전 기술 덕분에 매우 안전합니다. 대부분의 모델은 최고 안전 등급을 획득했습니다.")
 ]
 
+
+
 # FAQ 토글 생성
 for question, answer in faq_list:
     with st.expander(question):
@@ -27,3 +36,72 @@ for question, answer in faq_list:
 st.write("---")
 st.markdown("<h5 style='text-align: center;'>📞 추가 문의는 고객센터로 연락주세요.\n [경기도 광주지점]010-1234-5678</h5>", unsafe_allow_html=True)
 
+
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+
+
+user_input = st.chat_input("입력")
+
+# localDB.insertData('Me',user_input)
+
+def format_chat_history():
+    history_text = ""
+    for message in st.session_state.chat_history:
+        if message["role"] == "user":
+            history_text += f"나: {message['content']}\n"
+        else:
+            history_text += f"AI: {message['content']}\n"
+    return history_text
+
+ai_prompt = ChatPromptTemplate.from_messages([
+    ("system", "너는 기본적으로 한국어로 대답해야해 그리고 전기자동차 또는 자동차에 대한 FAQ를 제외하고 다른 내용을 물어볼 경우에는 답할 수 없다고 해"),
+    ("user", "대화 내용:\n{chat_history}\n나: {prompt}\nAI:")
+])
+
+llm = ChatGoogleGenerativeAI(
+    model="gemini-1.5-pro",
+    google_api_key=API_KEY,
+    temperature=0
+)
+
+output_parser = StrOutputParser()
+
+chain = ai_prompt | llm.with_config({"run_name": "model"}) | output_parser.with_config({"run_name": "Assistant"})
+
+def display_chat_history():
+    """대화 내역 전체를 출력 (스트리밍 응답 전까지 고정)"""
+    for message in st.session_state.chat_history:
+        role = "나" if message["role"] == "user" else "AI"
+        st.write(f"**{role}:** {message['content']}")
+
+async def generate_response(user_text, ai_placeholder):
+    """이전 대화 내용과 함께 AI 응답을 스트리밍"""
+    result_text = ""
+    conversation_history = format_chat_history()
+    prompt_vars = {"chat_history": conversation_history, "prompt": user_text}
+    
+    async for chunk in chain.astream_events(prompt_vars, version="v1", include_names=["Assistant"]):
+        if chunk.get("event") in ["on_parser_start", "on_parser_stream"]:
+            if "data" in chunk:
+                data = chunk["data"]
+                if isinstance(data, dict):
+                    data = data.get("chunk", "")
+                result_text += data
+                
+                ai_placeholder.markdown(f"**AI:** {result_text}")
+                
+    st.session_state.chat_history.append({"role": "assistant", "content": result_text})
+    return result_text
+
+if user_input:
+    st.session_state.chat_history.append({"role": "user", "content": user_input})
+    
+    display_chat_history()
+    
+    ai_placeholder = st.empty()
+    
+    try:
+        asyncio.run(generate_response(user_input, ai_placeholder))
+    except Exception as e:
+        st.error(f"에러 발생: {e}")
